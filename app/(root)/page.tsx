@@ -1,18 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { HiSearch, HiBriefcase, HiHeart, HiUser } from "react-icons/hi";
+import { HiBriefcase } from "react-icons/hi";
 
 export default function Home() {
-  const handleSearch = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
-      const query = (e.target as HTMLInputElement).value;
-      if (query.trim()) {
-        window.location.href = `/jobs?search=${encodeURIComponent(query)}`;
-      }
-    }
-  };
-
   return (
     <div className="bg-gradient-to-br from-blue-50 to-purple-50">
       <section className="py-20 px-6 text-center">
@@ -41,19 +32,6 @@ export default function Home() {
             >
               Create Profile
             </Link>
-          </div>
-
-          {/* Quick Search */}
-          <div className="max-w-md mx-auto">
-            <div className="relative">
-              <HiSearch className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
-              <input
-                type="text"
-                placeholder="Search jobs, companies..."
-                className="w-full pl-12 pr-4 py-3 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                onKeyDown={handleSearch}
-              />
-            </div>
           </div>
         </div>
       </section>

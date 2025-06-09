@@ -33,13 +33,6 @@ const Header = () => {
       <div className="container mx-auto px-6 py-4">
         <div className="hidden lg:flex items-center justify-between">
           <Logo />
-
-          <SearchForm
-            searchQuery={searchQuery}
-            onChange={setSearchQuery}
-            onSubmit={handleSearch}
-          />
-
           <Navigation links={navLinks} />
         </div>
 
