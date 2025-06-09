@@ -1,4 +1,4 @@
-import { Job } from "../mock/jobs";
+import { Job, UserProfile } from "@/types";
 
 export const getLikedJobs = (): Job[] => {
   try {
@@ -48,4 +48,13 @@ export const clearLikedJobs = (): void => {
   if (typeof window !== "undefined") {
     localStorage.removeItem("likedJobs");
   }
+};
+
+export const saveProfile = (profile: UserProfile): void => {
+  localStorage.setItem("userProfile", JSON.stringify(profile));
+};
+
+export const getProfile = (): UserProfile | null => {
+  const profile = localStorage.getItem("userProfile");
+  return profile ? JSON.parse(profile) : null;
 };
