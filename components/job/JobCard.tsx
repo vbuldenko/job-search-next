@@ -9,8 +9,8 @@ import {
   HiClock,
   HiTrash,
 } from "react-icons/hi";
-import { Job } from "@/lib/mock/jobs";
 import { toggleLikedJob, isJobLiked } from "@/lib/utils/localStorage";
+import { Job } from "@/types";
 
 interface JobCardProps {
   job: Job;

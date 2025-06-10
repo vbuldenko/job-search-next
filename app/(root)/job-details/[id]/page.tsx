@@ -10,20 +10,24 @@ import {
   HiCalendar,
   HiExternalLink,
 } from "react-icons/hi";
-import { mockJobs, Job } from "@/lib/mock/jobs";
+import { useJobDetails } from "@/hooks/useJobDetails";
 import { toggleLikedJob, isJobLiked } from "@/lib/utils/localStorage";
 
 const JobDetailsPage = () => {
   const params = useParams();
   const jobId = decodeURIComponent(params.id as string);
-  const [job, setJob] = useState<Job | null>(null);
   const [isLiked, setIsLiked] = useState(false);
 
+  const { data, error, isLoading } = useJobDetails(
+    jobId ? { job_id: jobId } : null
+  );
+  const job = !isLoading && data ? data[0] : null;
+
   useEffect(() => {
-    const foundJob = mockJobs.find((j) => j.job_id === jobId);
-    setJob(foundJob || null);
-    if (foundJob) setIsLiked(isJobLiked(foundJob.job_id));
-  }, [jobId]);
+    if (job) {
+      setIsLiked(isJobLiked(job.job_id));
+    }
+  }, [job]);
 
   const handleLikeToggle = () => {
     if (job) {
@@ -31,6 +35,28 @@ const JobDetailsPage = () => {
       setIsLiked(!isLiked);
     }
   };
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p className="text-gray-500">Loading job details...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-red-500 text-lg mb-4">Error loading job details</p>
+          <p className="text-gray-500">{error.message}</p>
+        </div>
+      </div>
+    );
+  }
 
   if (!job) {
     return (

@@ -6,9 +6,8 @@ import ProfileForm from "@/components/forms/ProfileForm";
 import { UserProfile } from "@/types";
 
 const CreateProfilePage = () => {
-  const [existingProfile, setExistingProfile] = useState<UserProfile | null>(
-    null
-  );
+  const [existingProfile, setExistingProfile] =
+    useState<Partial<UserProfile> | null>(null);
 
   useEffect(() => {
     const profile = getProfile();

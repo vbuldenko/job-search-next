@@ -83,7 +83,7 @@ const ProfileForm = () => {
       router.push("/jobs");
     } catch (error) {
       console.error("Error saving profile:", error);
-      alert(error.response.data.message);
+      alert((error as any)?.response?.data?.message || "An error occurred");
     } finally {
       setSubmitting(false);
     }

@@ -3,13 +3,13 @@
 import { useState, useEffect } from "react";
 import { HiHeart } from "react-icons/hi";
 import Link from "next/link";
-import { Job } from "@/lib/mock/jobs";
 import {
   getLikedJobs,
   removeLikedJob,
   clearLikedJobs,
 } from "@/lib/utils/localStorage";
 import JobCard from "@/components/job/JobCard";
+import { Job } from "@/types";
 
 const LikedPage = () => {
   const [likedJobs, setLikedJobs] = useState<Job[]>([]);
@@ -59,7 +59,7 @@ const LikedPage = () => {
               No liked jobs yet
             </h2>
             <p className="text-gray-600 mb-6">
-              Start exploring jobs and save the ones you're interested in.
+              Start exploring jobs and save the ones you&#39;re interested in.
             </p>
             <Link
               href="/jobs"
