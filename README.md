@@ -93,17 +93,9 @@ npm run dev
 6. **Open your browser**
    Navigate to [http://localhost:3000](http://localhost:3000)
 
-## 🔧 API Integration
-
-### JSearch API
-
-The application uses the JSearch API for job data:
-
-- **Search Endpoint**: `/search` - Search for jobs
-- **Job Details Endpoint**: `/job-details` - Get detailed job information
+## Implementation details
 
 ### Custom Hooks
-
 - `useJobs(params)` - Fetch job listings with search parameters
 - `useJobDetails(params)` - Fetch detailed job information by ID
 
