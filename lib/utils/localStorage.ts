@@ -50,11 +50,15 @@ export const clearLikedJobs = (): void => {
   }
 };
 
-export const saveProfile = (profile: UserProfile): void => {
+export const saveProfile = (profile: Partial<UserProfile>): void => {
   localStorage.setItem("userProfile", JSON.stringify(profile));
 };
 
-export const getProfile = (): UserProfile | null => {
+export const getProfile = (): Partial<UserProfile> | null => {
   const profile = localStorage.getItem("userProfile");
   return profile ? JSON.parse(profile) : null;
+};
+
+export const clearProfile = (): void => {
+  localStorage.removeItem("userProfile");
 };

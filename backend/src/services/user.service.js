@@ -19,6 +19,8 @@ const create = async (user) => {
     password: hash,
   });
   await newUser.save();
+
+  return User.findById(newUser._id).select("-password");
 };
 
 export { getByEmail, create };

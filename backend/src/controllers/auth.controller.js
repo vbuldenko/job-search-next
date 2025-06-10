@@ -3,13 +3,13 @@ import * as userService from "../services/user.service.js";
 import { comparePasswords } from "../utils/index.js";
 
 export const register = async (req, res) => {
-  const { name, email, password } = req.body;
-  if (!name || !email || !password) {
-    throw ApiError.BadRequest("Name, email, and password are required");
+  const { name, email, password, desiredJobTitle, aboutMe } = req.body;
+  if (!name || !email || !password || !desiredJobTitle || !aboutMe) {
+    throw ApiError.BadRequest("All fields are required");
   }
 
-  await userService.create({ name, email, password });
-  res.status(201).json({ message: "User registered successfully" });
+  const user = await userService.create({ ...req.body });
+  res.status(201).json(user);
 };
 
 export const login = async (req, res) => {
@@ -25,7 +25,5 @@ export const login = async (req, res) => {
     throw ApiError.BadRequest("Invalid credentials");
   }
 
-  res.send({
-    user,
-  });
+  res.send(user);
 };

@@ -1,74 +1,86 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { saveProfile, getProfile } from "@/lib/utils/localStorage";
+import { getProfile, clearProfile } from "@/lib/utils/localStorage";
 import ProfileForm from "@/components/forms/ProfileForm";
 import { UserProfile } from "@/types";
 
 const CreateProfilePage = () => {
-  const [formData, setFormData] = useState<UserProfile>({
-    name: "",
-    desiredJobTitle: "",
-    aboutMe: "",
-  });
-  const [isLoading, setIsLoading] = useState(false);
-  const router = useRouter();
+  const [existingProfile, setExistingProfile] = useState<UserProfile | null>(
+    null
+  );
 
   useEffect(() => {
     const profile = getProfile();
-    if (profile) setFormData(profile);
-  }, []);
-
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
-
-    try {
-      saveProfile(formData);
-      alert("Profile saved successfully!");
-      router.push("/jobs");
-    } catch (error) {
-      alert("Error saving profile");
-    } finally {
-      setIsLoading(false);
+    if (profile) {
+      setExistingProfile(profile);
     }
-  };
-
-  const isValid = !!(
-    formData.name.trim() &&
-    formData.desiredJobTitle.trim() &&
-    formData.aboutMe.trim()
-  );
+  }, []);
 
   return (
     <div className="min-h-screen bg-gray-50 py-8">
       <div className="container mx-auto px-6 max-w-2xl">
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-8">
-          <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">
-              Create Your Profile
-            </h1>
-            <p className="text-gray-600">
-              Tell us about yourself to get personalized job recommendations
-            </p>
-          </div>
+        {existingProfile ? (
+          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6">
+            <h2 className="text-xl font-semibold text-gray-900 mb-4">
+              Profile
+            </h2>
+            <div className="space-y-3">
+              <div>
+                <span className="font-medium text-gray-700">Name:</span>
+                <span className="ml-2 text-gray-600">
+                  {existingProfile.name}
+                </span>
+              </div>
+              <div>
+                <span className="font-medium text-gray-700">Email:</span>
+                <span className="ml-2 text-gray-600">
+                  {existingProfile.email}
+                </span>
+              </div>
+              <div>
+                <span className="font-medium text-gray-700">
+                  Desired Job Title:
+                </span>
+                <span className="ml-2 text-gray-600">
+                  {existingProfile.desiredJobTitle}
+                </span>
+              </div>
+              <div>
+                <span className="font-medium text-gray-700">About Me:</span>
+                <p className="ml-2 text-gray-600 mt-1">
+                  {existingProfile.aboutMe}
+                </p>
+              </div>
 
-          <ProfileForm
-            formData={formData}
-            onChange={handleChange}
-            onSubmit={handleSubmit}
-            isLoading={isLoading}
-            isValid={isValid}
-          />
-        </div>
+              <div className="mt-4">
+                <button
+                  onClick={() => {
+                    clearProfile();
+                  }}
+                  className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition"
+                >
+                  Log Out
+                </button>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-8">
+            <div className="text-center mb-8">
+              <h1 className="text-3xl font-bold text-gray-900 mb-2">
+                {existingProfile
+                  ? "Update Your Profile"
+                  : "Create Your Profile"}
+              </h1>
+              <p className="text-gray-600">
+                Tell us about yourself to get personalized job recommendations
+              </p>
+            </div>
+
+            <ProfileForm />
+          </div>
+        )}
       </div>
     </div>
   );

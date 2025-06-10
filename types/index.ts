@@ -1,7 +1,14 @@
 export interface UserProfile {
   name: string;
+  email: string;
+  password?: string;
   desiredJobTitle: string;
   aboutMe: string;
+}
+
+export interface AuthCredentials {
+  email: string;
+  password: string;
 }
 
 export interface ApplyOption {

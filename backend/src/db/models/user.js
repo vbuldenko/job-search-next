@@ -14,6 +14,14 @@ const UserSchema = new Schema(
       type: String,
       required: true,
     },
+    desiredJobTitle: {
+      type: String,
+      required: true,
+    },
+    aboutMe: {
+      type: String,
+      required: true,
+    },
   },
   {
     timestamps: true,
