@@ -13,7 +13,7 @@ interface JobSearchParams {
 export const useJobs = (params: JobSearchParams | null) => {
   const searchParams = params
     ? new URLSearchParams({
-        query: params.query || "",
+        query: params.query || "all",
         page: params?.page || "1",
         num_pages: params?.num_pages || "1",
         country: params?.country || "us",
